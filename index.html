@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#c91f27">
+<title>আমরা আমরাই — রক্তদাতা খুঁজুন</title>
+<style>
+:root{--red:#d9232e;--deep:#a9151d;--pale:#fff4f4;--line:#f4cfd1;--ink:#292323;--muted:#8a8181}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Noto Sans Bengali",sans-serif;background:#fff;color:var(--ink)}
+.hero{background:linear-gradient(145deg,#df252e,#a9151d);color:#fff;text-align:center;padding:30px 16px 28px}
+.drop{width:88px;height:88px;border-radius:50%;background:white;margin:0 auto 14px;display:grid;place-items:center;position:relative;font-size:44px;box-shadow:0 7px 20px #750b1233}
+.drop:after{content:"";position:absolute;width:16px;height:16px;border-radius:50%;background:#22c55e;border:3px solid white;right:4px;top:7px}
+h1{font-size:clamp(28px,7vw,42px);margin:0 0 20px;font-weight:850;letter-spacing:-1px}
+.slogan{display:inline-block;background:#8f1017aa;border-radius:30px;padding:12px 18px;font-size:16px}
+.stats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+.pill{border:1px solid #ffffff55;background:#ffffff28;border-radius:30px;padding:10px 15px;font-size:14px}
+.tabs{display:flex;gap:10px;overflow-x:auto;padding:14px 16px;border-bottom:1px solid #f4dddd;scrollbar-width:thin}
+.tab{white-space:nowrap;border:2px solid var(--line);background:white;color:#8e2026;border-radius:40px;padding:12px 18px;font-weight:700;font-size:16px}
+.tab.active{background:var(--red);color:white;border-color:var(--red)}
+main{max-width:900px;margin:auto;padding:18px 16px 100px}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+select,input,button{font:inherit}
+select,.search{border:2px solid var(--line);border-radius:14px;padding:13px;background:#fff;color:#514949;min-height:50px}
+select{flex:1;min-width:140px}.search{width:100%;font-size:16px}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:22px 0 12px}
+.section-head h2{font-size:20px;margin:0}.small{font-size:13px;color:var(--muted)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:12px;margin-top:18px}
+.donor{border:1px solid #f0d4d5;border-radius:18px;padding:16px;background:white;box-shadow:0 5px 16px #6d101008}
+.donor-top{display:flex;gap:12px;align-items:center}.blood{background:#ffe3e4;color:#c51e28;border-radius:14px;padding:10px 12px;font-weight:900;font-size:20px}
+.donor h3{margin:0 0 4px;font-size:17px}.donor p{margin:5px 0;color:#706868;font-size:14px}
+.actions{display:flex;gap:8px;margin-top:13px}.actions a,.actions button{flex:1;text-align:center;border:0;border-radius:10px;padding:10px;text-decoration:none;font-weight:700;font-size:14px}
+.call{background:var(--red);color:white}.details{background:#fff0f0;color:#a71921}
+.empty{text-align:center;background:var(--pale);border-radius:18px;padding:35px 14px;color:#8d8585;margin-top:18px}
+.empty .big{font-size:55px;line-height:1.3}.empty p{margin:8px 0}
+.fab{position:fixed;right:22px;bottom:28px;width:68px;height:68px;border-radius:50%;background:linear-gradient(145deg,#e52b34,#a9151d);color:#fff;border:5px solid white;box-shadow:0 6px 25px #b9192540;font-size:38px;line-height:1;cursor:pointer}
+.note{background:#fff9e8;border:1px solid #f0dfac;border-radius:12px;padding:12px;color:#65562a;font-size:13px;margin-top:18px}
+dialog{border:0;border-radius:20px;padding:0;width:min(92vw,480px);box-shadow:0 20px 80px #0003}dialog::backdrop{background:#19090ab0}
+.modal-head{background:var(--red);color:white;padding:18px 20px}.modal-head h2{margin:0;font-size:21px}.formbody{padding:18px;display:grid;gap:12px}.formbody label{font-size:14px;font-weight:700}.formbody input,.formbody select{display:block;width:100%;margin-top:5px}.submit{background:var(--red);color:white;border:0;border-radius:12px;padding:13px;font-weight:800}.cancel{background:#f6eeee;color:#7a252a;border:0;border-radius:12px;padding:12px}
+footer{text-align:center;padding:20px;color:#8b8282;font-size:12px;border-top:1px solid #f5e5e5}
+@media(min-width:700px){.hero{padding:42px 16px 36px}.slogan{font-size:18px}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="drop" aria-hidden="true">🩸</div>
+  <h1>আমরা আমরাই</h1>
+  <div class="slogan">🔴 আমরা আমরাই তো, রক্ত লাগলে কইরব তো!</div>
+  <div class="stats"><span class="pill">🔴 মোট: <b id="count">০</b> জন</span><span class="pill">📍 বাংলাদেশ</span><span class="pill">🔴 ডোনার খুঁজুন</span></div>
+</header>
+<nav class="tabs" aria-label="রক্তের গ্রুপ">
+  <button class="tab active" data-blood="সব">🔴 সব</button>
+  <button class="tab" data-blood="A+">🩸 A+</button><button class="tab" data-blood="A-">🩸 A−</button>
+  <button class="tab" data-blood="B+">🩸 B+</button><button class="tab" data-blood="B-">🩸 B−</button>
+  <button class="tab" data-blood="AB+">🩸 AB+</button><button class="tab" data-blood="AB-">🩸 AB−</button>
+  <button class="tab" data-blood="O+">🩸 O+</button><button class="tab" data-blood="O-">🩸 O−</button>
+</nav>
+<main>
+  <div class="filters">
+    <select id="district"><option value="">সব জেলা</option><option>নোয়াখালী</option><option>লক্ষ্মীপুর</option><option>ফেনী</option><option>চট্টগ্রাম</option><option>ঢাকা</option><option>কুমিল্লা</option></select>
+    <select id="upazila"><option value="">সব উপজেলা</option><option>সদর</option><option>বেগমগঞ্জ</option><option>চাটখিল</option><option>সেনবাগ</option><option>রামগঞ্জ</option><option>হাতিয়া</option></select>
+  </div>
+  <input id="search" class="search" placeholder="🔎 নাম/উপজেলা খুঁজুন..." aria-label="নাম বা উপজেলা দিয়ে খুঁজুন">
+  <div class="section-head"><h2>রক্তদাতার তালিকা</h2><span class="small" id="resultText">কোনো ডোনার নেই</span></div>
+  <div id="cards" class="cards"></div>
+  <div id="empty" class="empty"><div class="big">🔴</div><p>এখনো কোনো ডোনার যোগ করা হয়নি</p><p class="small">নিচের + বাটনে চাপ দিয়ে ডেমো ডোনার যোগ করে দেখতে পারো।</p></div>
+  <div class="note">ℹ️ এটি প্রাথমিক ডেমো। এখানে যোগ করা তথ্য শুধু এই ব্রাউজারে থাকে; সবার জন্য অনলাইনে সংরক্ষণ হয় না। বাস্তবে চালুর আগে নিরাপদ ডেটাবেস ও ডোনারের সম্মতি যুক্ত করতে হবে।</div>
+</main>
+<button class="fab" id="openForm" aria-label="ডোনার যোগ করুন">+</button>
+<footer>❤️ স্বেচ্ছায় রক্তদান জীবন বাঁচাতে সাহায্য করে। রক্ত দেওয়ার উপযুক্ততা চিকিৎসাকর্মী যাচাই করবেন।</footer>
+<dialog id="formDialog">
+  <div class="modal-head"><h2>নতুন রক্তদাতা যোগ করুন</h2></div>
+  <form id="donorForm" class="formbody">
+    <label>নাম *<input name="name" required maxlength="70" placeholder="ডোনারের নাম"></label>
+    <label>রক্তের গ্রুপ *<select name="blood" required><option value="">নির্বাচন করুন</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select></label>
+    <label>জেলা *<select name="district" required><option value="">নির্বাচন করুন</option><option>নোয়াখালী</option><option>লক্ষ্মীপুর</option><option>ফেনী</option><option>চট্টগ্রাম</option><option>ঢাকা</option><option>কুমিল্লা</option></select></label>
+    <label>উপজেলা<input name="upazila" required maxlength="60" placeholder="উপজেলার নাম"></label>
+    <label>ফোন নম্বর *<input name="phone" required type="tel" inputmode="tel" pattern="[0-9+ -]{8,18}" placeholder="ফোন নম্বর"></label>
+    <label><input type="checkbox" name="consent" required style="display:inline;width:auto"> আমি নিশ্চিত করছি যে ডোনার এই তথ্য প্রকাশে সম্মতি দিয়েছেন।</label>
+    <button class="submit" type="submit">ডেমোতে যোগ করুন</button><button class="cancel" type="button" id="closeForm">বাতিল</button>
+  </form>
+</dialog>
+<script>
+const bn=n=>String(n).replace(/\d/g,d=>"০১২৩৪৫৬৭৮৯"[d]);
+let donors=[];
+try{donors=JSON.parse(localStorage.getItem("amra_amrai_demo")||"[]")}catch(e){}
+let selectedBlood="সব";
+const cards=document.getElementById("cards"), empty=document.getElementById("empty");
+function render(){
+ const district=document.getElementById("district").value, upazila=document.getElementById("upazila").value, q=document.getElementById("search").value.trim().toLowerCase();
+ const filtered=donors.filter(d=>(selectedBlood==="সব"||d.blood===selectedBlood)&&(!district||d.district===district)&&(!upazila||d.upazila===upazila)&&(!q||(d.name+" "+d.district+" "+d.upazila+" "+d.blood).toLowerCase().includes(q)));
+ document.getElementById("count").textContent=bn(donors.length);
+ document.getElementById("resultText").textContent=filtered.length?bn(filtered.length)+" জন পাওয়া গেছে":"কোনো ডোনার নেই";
+ cards.innerHTML="";
+ filtered.forEach(d=>{const el=document.createElement("article");el.className="donor";el.innerHTML=`<div class="donor-top"><div class="blood"></div><div><h3></h3><p class="place"></p></div></div><div class="actions"><a class="call"></a><button class="details" type="button">যোগাযোগের আগে যাচাই করুন</button></div>`;
+ el.querySelector(".blood").textContent=d.blood;el.querySelector("h3").textContent=d.name;el.querySelector(".place").textContent="📍 "+d.upazila+", "+d.district;
+ const a=el.querySelector(".call");a.textContent="📞 কল করুন";a.href="tel:"+d.phone.replace(/[^\d+]/g,"");el.querySelector(".details").addEventListener("click",()=>alert("যোগাযোগের আগে পরিচয়, সম্মতি ও রক্তদানের উপযুক্ততা যাচাই করুন।"));cards.appendChild(el)});
+ empty.style.display=filtered.length?"none":"block";
+}
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");selectedBlood=b.dataset.blood;render()}));
+["district","upazila","search"].forEach(id=>document.getElementById(id).addEventListener(id==="search"?"input":"change",render));
+const dlg=document.getElementById("formDialog");document.getElementById("openForm").onclick=()=>dlg.showModal();document.getElementById("closeForm").onclick=()=>dlg.close();
+document.getElementById("donorForm").addEventListener("submit",e=>{e.preventDefault();const f=new FormData(e.target);const d={name:f.get("name").trim(),blood:f.get("blood"),district:f.get("district"),upazila:f.get("upazila").trim(),phone:f.get("phone").trim()};donors.unshift(d);try{localStorage.setItem("amra_amrai_demo",JSON.stringify(donors))}catch(err){}e.target.reset();dlg.close();render();alert("ডেমোতে ডোনার যোগ হয়েছে। এটি এখনো অনলাইন ডেটাবেসে সংরক্ষিত নয়।")});
+render();
+</script>
+</body>
+</html>
